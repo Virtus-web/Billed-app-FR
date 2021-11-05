@@ -19,6 +19,7 @@ const row = (bill) => {
     `)
   }
 
+                                                ///Bug[Report] - Bills///
 const rows = (data) => {
     //Ici on déclare une nouvelle variable pour ordonner les factures une fois dans le tableau sur la page Bills
     const bugReportData = data && data.length ? data.sort((a, b) => new Date(b.date) - new Date(a.date)) : ""

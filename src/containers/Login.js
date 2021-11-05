@@ -32,6 +32,7 @@ export default class Login {
     this.document.body.style.backgroundColor="#fff"
   }
 
+                                              ///Bug[Report] - Login///
   handleSubmitAdmin = e => {
       //Ici il faut modifier le selector pour sélectionner l'input admin et non employee pour résoudre le bug report Login
     const user = {
