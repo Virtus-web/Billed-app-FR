@@ -20,7 +20,9 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+    //Ici on déclare une nouvelle variable pour ordonner les factures une fois dans le tableau sur la page Bills
+    const bugReportData = data && data.length ? data.sort((a, b) => new Date(b.date) - new Date(a.date)) : ""
+    return (data && data.length) ? bugReportData.map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
