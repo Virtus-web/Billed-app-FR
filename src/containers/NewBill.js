@@ -1,4 +1,3 @@
-
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
@@ -46,7 +45,8 @@ export default class NewBill {
 
     handleSubmit = e => {
         e.preventDefault()
-        console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`inpu[data-testid="datepicker"]`).value)
+        if (this.fileName === "invalid") return;
+        // console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`inpu[data-testid="datepicker"]`).value)
         const email = JSON.parse(localStorage.getItem("user")).email
         const bill = {
             email,

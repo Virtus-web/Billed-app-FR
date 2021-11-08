@@ -6,64 +6,57 @@ import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
-  return (data && data.length) ?
+    return (data && data.length) ?
     data.filter(bill => {
-
-      let selectCondition
-
-      // in jest environment
-      if (typeof jest !== 'undefined') {
-        selectCondition = (bill.status === status)
-      } else {
-        // in prod environment
-        const userEmail = JSON.parse(localStorage.getItem("user")).email
-        selectCondition =
-          (bill.status === status) &&
-          [...USERS_TEST, userEmail].includes(bill.email)
-      }
-
-      return selectCondition
+        let selectCondition
+        // in jest environment
+        if (typeof jest !== 'undefined') {
+            selectCondition = (bill.status === status)
+        } else {
+            // in prod environment
+            const userEmail = JSON.parse(localStorage.getItem("user")).email
+            selectCondition = (bill.status === status) && [...USERS_TEST, userEmail].includes(bill.email)
+        }
+        return selectCondition
     }) : []
 }
 
 export const card = (bill) => {
-  const firstAndLastNames = bill.email.split('@')[0]
-  const firstName = firstAndLastNames.includes('.') ?
-    firstAndLastNames.split('.')[0] : ''
-  const lastName = firstAndLastNames.includes('.') ?
-  firstAndLastNames.split('.')[1] : firstAndLastNames
+    const firstAndLastNames = bill.email.split('@')[0]
+    const firstName = firstAndLastNames.includes('.') ? firstAndLastNames.split('.')[0] : ""
+    const lastName = firstAndLastNames.includes('.') ? firstAndLastNames.split('.')[1] : firstAndLastNames
 
-  return (`
-    <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
-      <div class='bill-card-name-container'>
-        <div class='bill-card-name'> ${firstName} ${lastName} </div>
-        <span class='bill-card-grey'> ... </span>
-      </div>
-      <div class='name-price-container'>
-        <span> ${bill.name} </span>
-        <span> ${bill.amount} € </span>
-      </div>
-      <div class='date-type-container'>
-        <span> ${formatDate(bill.date)} </span>
-        <span> ${bill.type} </span>
-      </div>
-    </div>
-  `)
+    return (`
+        <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
+        <div class='bill-card-name-container'>
+            <div class='bill-card-name'> ${firstName} ${lastName} </div>
+            <span class='bill-card-grey'> ... </span>
+        </div>
+        <div class='name-price-container'>
+            <span> ${bill.name} </span>
+            <span> ${bill.amount} € </span>
+        </div>
+        <div class='date-type-container'>
+            <span> ${formatDate(bill.date)} </span>
+            <span> ${bill.type} </span>
+        </div>
+        </div>
+    `)
 }
 
 export const cards = (bills) => {
-  return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
+    return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
 
 export const getStatus = (index) => {
-  switch (index) {
-    case 1:
-      return "pending"
-    case 2:
-      return "accepted"
-    case 3:
-      return "refused"
-  }
+    switch (index) {
+        case 1:
+        return "pending"
+        case 2:
+        return "accepted"
+        case 3:
+        return "refused"
+    }
 }
 
 export default class {
@@ -89,21 +82,21 @@ export default class {
         if (this.counter === undefined || this.id !== bill.id) this.counter = 0
         if (this.id === undefined || this.id !== bill.id) this.id = bill.id
         if (this.counter % 2 === 0) {
-        bills.forEach(b => {
-            $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
-        })
-        $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
-        $('.dashboard-right-container div').html(DashboardFormUI(bill))
-        $('.vertical-navbar').css({ height: '150vh' })
-        this.counter = 3 //Remplacer this.counter ++ pour le bug[Report] - Dashboard//
+            bills.forEach(b => {
+                $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
+            })
+            $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
+            $('.dashboard-right-container div').html(DashboardFormUI(bill))
+            $('.vertical-navbar').css({ height: '150vh' })
+            this.counter = 3 //Remplacer this.counter ++ pour le bug[Report] - Dashboard//
         } else {
-        $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
+            $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
-        $('.dashboard-right-container div').html(`
-            <div id="big-billed-icon"> ${BigBilledIcon} </div>
-        `)
-        $('.vertical-navbar').css({ height: '120vh' })
-        this.counter = 2 //Remplacer this.counter ++ pour le bug[Report] - Dashboard//
+            $('.dashboard-right-container div').html(`
+                <div id="big-billed-icon"> ${BigBilledIcon} </div>
+            `)
+            $('.vertical-navbar').css({ height: '120vh' })
+            this.counter = 2 //Remplacer this.counter ++ pour le bug[Report] - Dashboard//
         }
         $('#icon-eye-d').click(this.handleClickIconEye)
         $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
@@ -112,9 +105,9 @@ export default class {
 
     handleAcceptSubmit = (e, bill) => {
         const newBill = {
-        ...bill,
-        status: 'accepted',
-        commentAdmin: $('#commentary2').val()
+            ...bill,
+            status: 'accepted',
+            commentAdmin: $('#commentary2').val(),
         }
         this.updateBill(newBill)
         this.onNavigate(ROUTES_PATH['Dashboard'])
@@ -122,9 +115,9 @@ export default class {
 
     handleRefuseSubmit = (e, bill) => {
         const newBill = {
-        ...bill,
-        status: 'refused',
-        commentAdmin: $('#commentary2').val()
+            ...bill,
+            status: 'refused',
+            commentAdmin: $('#commentary2').val(),
         }
         this.updateBill(newBill)
         this.onNavigate(ROUTES_PATH['Dashboard'])
@@ -147,7 +140,6 @@ export default class {
 
             this.counter ++
         } else {
-            console.log('ok')
             $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
             $(`#status-bills-container${this.index}`).html("")
 
