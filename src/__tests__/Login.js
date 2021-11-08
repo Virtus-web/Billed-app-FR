@@ -75,7 +75,7 @@ describe("Given that I am a user on login page", () => {
 
             // we have to mock navigation to test it
             const onNavigate = (pathname) => {
-            document.body.innerHTML = ROUTES({ pathname })
+                document.body.innerHTML = ROUTES({ pathname })
             }
 
             let PREVIOUS_LOCATION = ''
@@ -83,11 +83,11 @@ describe("Given that I am a user on login page", () => {
             const firebase = jest.fn()
 
             const login = new Login({
-            document,
-            localStorage: window.localStorage,
-            onNavigate,
-            PREVIOUS_LOCATION,
-            firebase
+                document,
+                localStorage: window.localStorage,
+                onNavigate,
+                PREVIOUS_LOCATION,
+                firebase
             })
 
             const handleSubmit = jest.fn(login.handleSubmitEmployee)    
@@ -98,10 +98,10 @@ describe("Given that I am a user on login page", () => {
             expect(window.localStorage.setItem).toHaveBeenCalledWith(
                 "user",
                 JSON.stringify({
-                type: "Employee",
-                email: inputData.email,
-                password: inputData.password,
-                status: "connected"
+                    type: "Employee",
+                    email: inputData.email,
+                    password: inputData.password,
+                    status: "connected"
                 })
             )
         })  
@@ -206,18 +206,18 @@ describe("Given that I am a user on login page", () => {
             expect(handleSubmit).toHaveBeenCalled()
             expect(window.localStorage.setItem).toHaveBeenCalled()
             expect(window.localStorage.setItem).toHaveBeenCalledWith(
-            "user",
-            JSON.stringify({
-                type: "Admin",
-                email: inputData.email,
-                password: inputData.password,
-                status: "connected"
-            })
+                "user",
+                JSON.stringify({
+                    type: "Admin",
+                    email: inputData.email,
+                    password: inputData.password,
+                    status: "connected"
+                })
             )
         })  
 
         test("It should renders HR dashboard page", () => {
-        expect(screen.queryByText('Validations')).toBeTruthy()
+            expect(screen.queryByText('Validations')).toBeTruthy()
         })
     })
 })
