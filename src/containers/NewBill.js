@@ -21,6 +21,7 @@ export default class NewBill {
         const filePath = e.target.value.split(/\\/g)
         const fileName = filePath[filePath.length-1]
 
+        //Vérifie si l'extension du fichier est valide
         const extensionCheck = /(png|jpg|jpeg)/g
         const extension = fileName.split(".").pop()
         const matchExtension = extension.toLowerCase().match(extensionCheck)
@@ -38,6 +39,7 @@ export default class NewBill {
             .then(snapshot => snapshot.ref.getDownloadURL())
             .then(url => {
                 this.fileUrl = url
+                //Vérifie si l'extension du fichier est valide
                 this.fileName = matchExtension ? fileName : "invalid"
             })
         }
@@ -45,8 +47,9 @@ export default class NewBill {
 
     handleSubmit = e => {
         e.preventDefault()
+        //Vérifie si l'extension du fichier est valide
         if (this.fileName === "invalid") return;
-        // console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`inpu[data-testid="datepicker"]`).value)
+        
         const email = JSON.parse(localStorage.getItem("user")).email
         const bill = {
             email,

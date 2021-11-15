@@ -7,8 +7,6 @@ import NewBillUI from "../views/NewBillUI.js"
 import BillsUI from "../views/BillsUI.js"
 import NewBill from "../containers/NewBill.js"
 
-jest.mock("../app/Firestore")
-
 //Test de la fonctionnalité de téléchargement des justificatifs en format image
 describe("Given I am connected as an employee", () => {
     describe("When I am on NewBill Page and I add an image file", () => {
@@ -20,6 +18,8 @@ describe("Given I am connected as an employee", () => {
             const onNavigate = (pathname) => {
                 document.body.innerHTML = ROUTES({ pathname })
             }
+
+            jest.mock("../app/Firestore")
 
             Object.defineProperty(window, "localStorage", {value: localStorageMock})
             window.localStorage.setItem("user", JSON.stringify({type: "Employee"}))
