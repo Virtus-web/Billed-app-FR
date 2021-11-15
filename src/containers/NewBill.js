@@ -24,9 +24,12 @@ export default class NewBill {
         //Vérifie si l'extension du fichier est valide
         const extensionCheck = /(png|jpg|jpeg)/g
         const extension = fileName.split(".").pop()
+
         const matchExtension = extension.toLowerCase().match(extensionCheck)
+        //condition pour savoir si le fichier est valide et si on peut l'envoyer à la firebase pour ne pas gâcher de l'espace
 
         this.handleFirestoreStorage(fileName, file, matchExtension)
+        //alert fichier invalid
     }
 
     // Ajout de cette fonction pour refactoriser la fonction handleChangeFile
